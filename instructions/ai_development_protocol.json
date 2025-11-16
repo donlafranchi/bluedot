@@ -1,0 +1,67 @@
+{
+  "protocol_version": "1.0",
+  "sprint_structure": {
+    "naming": {
+      "branch": "sprint-XX/<focus>",
+      "docs": {
+        "plan": "docs/sprint-XX-plan.md",
+        "test_plan": "docs/sprint-XX-testplan.md",
+        "retro": "docs/sprint-XX-retro.md",
+        "ai_log": "docs/sprint-XX-ai-log.md",
+        "release": "docs/sprint-XX-release.md"
+      },
+      "tags": "v0.X-sprintXX"
+    },
+    "before": [
+      "Create/activate the conda env (conda env create -f environment.yml; conda activate bluedot).",
+      "Read docs/product-brief.md and docs/arch-overview.md.",
+      "Duplicate docs/templates/sprint-plan-template.md into docs/sprint-XX-plan.md.",
+      "Document sprint goals, user stories, acceptance tests, and AI prompt considerations.",
+      "Open backlog items (docs/backlog.md) and map to sprint stories.",
+      "Create sprint branch: git fetch origin && git checkout -b sprint-XX/<focus>.",
+      "Define testing approach in docs/sprint-XX-testplan.md.",
+      "Verify Render env + secrets locally via .env.sample sync.",
+      "List initial tasks in docs/sprint-XX-ai-log.md to guide AI tool runs."
+    ],
+    "during": [
+      "Work in feature branches off sprint branch when necessary (git checkout -b sprint-XX/<story-id>).",
+      "For each change: update docs/sprint-XX-plan.md status table.",
+      "Log every significant AI prompt/response pair inside docs/sprint-XX-ai-log.md with timestamps.",
+      "Write or update code with TDD mindset; add/maintain automated tests.",
+      "Run appropriate test commands (pytest, npm test, playwright) before every push.",
+      "Keep docs/sprint-XX-testplan.md updated with executed tests + results.",
+      "Push to origin frequently; open Draft PR referencing sprint doc.",
+      "Trigger Render preview deploys when functionality is demo-ready.",
+      "Document deployment notes in docs/sprint-XX-release.md (build numbers, migrations)."
+    ],
+    "after": [
+      "Ensure all feature branches are merged via reviewed PRs into main.",
+      "Tag release v0.X-sprintXX after successful regression sweep.",
+      "Complete regression tests per docs/sprint-XX-testplan.md and record pass/fail.",
+      "Fill docs/sprint-XX-retro.md with sections: Went Well, Risks, Improvements, Action Items, Metrics.",
+      "Copy durable AI prompt learnings into docs/ai-playbook.md.",
+      "Update docs/backlog.md with new/remaining items and priorities.",
+      "Create docs/sprint-(XX+1)-plan.md skeleton using template and include action items from retro.",
+      "Archive sprint-specific assets if needed and clean up merged branches locally (git branch -d)."
+    ]
+  },
+  "coding_principles": [
+    "Maintain nonpartisan, plain-language explanations as per .context docs.",
+    "Preserve the story → feeling → clarity → visual → action loop in every feature.",
+    "Favor composable, testable modules and document intricate logic with concise comments.",
+    "Never commit secrets; use environment variables managed by Render.",
+    "All migrations must be idempotent and stored under backend/migrations.",
+    "UI must remain mobile-first with touch-friendly targets."
+  ],
+  "ai_usage_rules": {
+    "allowed_tools": ["OpenAI Codex", "Anthropic", "internal AI agents"],
+    "logging": "Record prompts/responses in docs/sprint-XX-ai-log.md without sensitive data.",
+    "review": "Before merging, a human must skim AI-written code and run tests."
+  },
+  "testing_matrix": {
+    "backend": ["pytest", "black --check", "ruff"],
+    "frontend": ["npm run lint", "npm run test", "npm run lint:types"],
+    "e2e": ["npx playwright test"],
+    "deployment": ["Render preview smoke", "Postman collection run"]
+  }
+}

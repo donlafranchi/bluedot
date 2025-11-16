@@ -1,0 +1,28 @@
+{
+  "service": "Render",
+  "environments": ["preview", "production"],
+  "backend": {
+    "type": "web-service",
+    "buildCommand": "cd backend && poetry install --no-root && poetry run alembic upgrade head",
+    "startCommand": "cd backend && uvicorn app.main:app --host 0.0.0.0 --port 10000",
+    "healthCheck": "/health",
+    "envVars": ["DATABASE_URL", "LLM_API_KEY", "CIVIC_API_KEY", "GROUND_NEWS_KEY"]
+  },
+  "frontend": {
+    "type": "static-site",
+    "buildCommand": "cd frontend && npm install && npm run build",
+    "publishPath": "frontend/.next",
+    "envVars": ["NEXT_PUBLIC_API_BASE_URL"]
+  },
+  "database": {
+    "type": "postgres",
+    "version": "15",
+    "notes": "Enable daily backups; restrict access via internal network only."
+  },
+  "deployment_steps": [
+    "Push code to GitHub main branch with tag v0.X-sprintXX.",
+    "Render auto-build triggers preview; verify health endpoints.",
+    "Promote preview to production once testplan passes.",
+    "Record deployment metadata in docs/sprint-XX-release.md."
+  ]
+}

@@ -1,0 +1,24 @@
+# Node
+node_modules/
+.next/
+
+# Python
+__pycache__/
+*.pyc
+.env
+.env.*
+backend/.venv/
+backend/.mypy_cache/
+
+# OS
+.DS_Store
+
+# Logs
+*.log
+
+# Coverage
+.coverage
+htmlcov/
+
+# Misc
+poetry.lock
