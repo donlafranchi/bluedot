@@ -1,12 +1,12 @@
 FROM node:18-alpine AS deps
 WORKDIR /app
-COPY package*.json ./
+COPY frontend/package*.json ./
 RUN npm install || true
 
 FROM node:18-alpine AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
-COPY . .
+COPY frontend/. .
 RUN npm run build || true
 
 FROM node:18-alpine AS runner
