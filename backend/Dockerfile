@@ -6,7 +6,10 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
 WORKDIR /app
 
 RUN pip install --upgrade pip && pip install poetry
-COPY pyproject.toml ./
+COPY backend/pyproject.toml ./pyproject.toml
+COPY backend/app ./app
+COPY backend/poetry.lock ./poetry.lock
+
 RUN poetry config virtualenvs.create false && poetry install --no-root --without dev
 
 COPY . .
